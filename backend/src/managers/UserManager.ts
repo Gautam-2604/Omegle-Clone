@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-interface User{
+export interface User{
     socket: Socket;
     name: string;
 }
@@ -27,5 +27,11 @@ export class UserManager{
             return;
         }
         const user1=this.users.find(x=>x.socket.id===this.queue.pop())
+        const user2=this.users.find(x=>x.socket.id===this.queue.pop())
+        
+        user1?.socket.emit("new-room",{
+            type: "send-offer",
+            roomId
+        })
     }
 }
